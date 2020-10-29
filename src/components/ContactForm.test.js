@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import ContactForm from './ContactForm';
 
 test('ContactForm adds new contacts to the list', () => {
@@ -12,7 +12,13 @@ test('ContactForm adds new contacts to the list', () => {
     const firstNameInput = screen.getByLabelText(/first name/i);
     const lastNameInput = screen.getByLabelText(/last name/i);
     const emailNameInput = screen.getByLabelText(/email/i);
-    const messageNameInput = screen.getByLabelText(/message/i);
+    const messageInput = screen.getByLabelText(/message/i);
+
+    // Events with RTL
+    fireEvent.change(firstNameInput, { target: { value: 'Liv' } });
+    fireEvent.change(lastNameInput, { target: { value: 'Toolson' } });
+    fireEvent.change(emailNameInput, { target: { value: 'olivia@gmail.com' } });
+    fireEvent.change(messageInput, { target: { value: 'None' } });
 
 
 
