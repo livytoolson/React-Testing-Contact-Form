@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event'
 import ContactForm from './ContactForm';
 
 test('Component renders properly', () => {
@@ -15,7 +16,7 @@ test('Placeholders are rendered', () => {
 
 test('ContactForm elements are rendered', () => {
     render(<ContactForm />);
-    
+
     screen.getByLabelText(/first name/i)
     screen.getByLabelText(/last name/i)
     screen.getByLabelText(/email/i)
@@ -62,10 +63,14 @@ test('Name is more than 3 chars error message', async () => {
     render(<ContactForm />);
     const firstNameInput = screen.getByPlaceholderText(/edd/i);
   
-    fireEvent.change(firstNameInput , {
-      target: { name: 'firstName', value: 'Chris'}
+    fireEvent.change(firstNameInput, {
+      target: { value: 'Hello'}
     });
-  
+
+    // firstNameInput.blur();
+    userEvent.tab();
+    // screen.debug();
+    await expect(screen.queryByTestId(/error/i)).toBeVisible();
     await waitFor(() => expect(screen.queryByText(/looks like there was an error/i)))
   
   })

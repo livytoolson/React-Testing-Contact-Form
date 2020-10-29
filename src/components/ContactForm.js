@@ -22,7 +22,7 @@ const ContactForm = () => {
             ref={register({ required: true, maxLength: 3 })}
           />
           {errors.firstName && (
-            <p>Looks like there was an error: {errors.firstName.type}</p>
+            <p data-testid="error">Looks like there was an error: {errors.firstName.type}</p>
           )}
         </div>
 
