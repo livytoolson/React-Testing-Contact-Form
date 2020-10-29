@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ContactForm from './ContactForm';
 
 test('Component renders properly', () => {
@@ -8,12 +8,14 @@ test('Component renders properly', () => {
 
 test('Placeholders are rendered', () => {
     render(<ContactForm />);
+
     screen.getByPlaceholderText(/edd/i)
     screen.getByPlaceholderText(/burke/i)
   })
 
 test('ContactForm elements are rendered', () => {
     render(<ContactForm />);
+    
     screen.getByLabelText(/first name/i)
     screen.getByLabelText(/last name/i)
     screen.getByLabelText(/email/i)
@@ -32,7 +34,6 @@ test('ContactForm adds new contacts to the list', () => {
 
     // Events with RTL
     fireEvent.change(firstNameInput, { target: { value: 'Joe'} });
-    // fireEvent.change(firstNameInput, { target: { value: 'John', name: 'firstName' } }); // throws an error because it is over 3 chars
     fireEvent.change(lastNameInput, { target: { value: 'Doe' } });
     fireEvent.change(emailInput, { target: { value: 'joe@gmail.com' } });
     fireEvent.change(messageInput, { target: { value: 'Hello' } });
@@ -56,3 +57,15 @@ test('ContactForm adds new contacts to the list', () => {
     expect(emailInput).toHaveValue('joe@gmail.com');
     expect(messageInput).toHaveValue('Hello');
 })
+
+test('Name is more than 3 chars error message', async () => {
+    render(<ContactForm />);
+    const firstNameInput = screen.getByPlaceholderText(/edd/i);
+  
+    fireEvent.change(firstNameInput , {
+      target: { name: 'firstName', value: 'Chris'}
+    });
+  
+    await waitFor(() => expect(screen.queryByText(/looks like there was an error/i)))
+  
+  })
