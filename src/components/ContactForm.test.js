@@ -25,8 +25,8 @@ test('ContactForm adds new contacts to the list', () => {
     // click submit button
     // 1. query for the button
     // 2. run the click event on the button
-    // const submitButton = screen.getByText(/submit/i)
-    // fireEvent.click(submitButton);
+    const submitButton = screen.getByRole('button', {name: /submit/i})
+    fireEvent.click(submitButton);
 
 
     // assert that any new contact is in the list
