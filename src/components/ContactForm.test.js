@@ -25,10 +25,13 @@ test('ContactForm adds new contacts to the list', () => {
     // click submit button
     // 1. query for the button
     // 2. run the click event on the button
-
+    // const submitButton = screen.getByText(/submit/i)
+    // fireEvent.click(submitButton);
 
 
     // assert that any new contact is in the list
     // 1. query for the new contact text
     // 2. assert that it is being rendered
+    // const newContact = screen.getByText(/liv/i);
+    // expect(newContact).toBeInTheDocument();
 })
